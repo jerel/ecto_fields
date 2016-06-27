@@ -21,3 +21,22 @@ To install EctoFields:
           field :ip_address, EctoFields.IP
         end
 
+## Current fields
+
+* EctoFields.Email
+* EctoFields.IP (accepts both ipv4 and ipv6)
+* EctoFields.PositiveInteger
+* EctoFields.Slug
+* EctoFields.URL
+
+## Roadmap
+
+### Likely:
+
+* EctoFields.Duration
+
+### Maybe:
+
+* EctoFields.File
+* EctoFields.Image
+
