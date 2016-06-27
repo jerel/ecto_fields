@@ -1,0 +1,2 @@
+defmodule EctoFields do
+end
