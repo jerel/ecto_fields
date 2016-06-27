@@ -4,6 +4,7 @@ defmodule EctoFieldsTest do
 
   doctest EctoFields.Email
   doctest EctoFields.IP
+  doctest EctoFields.PositiveInteger
   doctest EctoFields.Slug
   doctest EctoFields.URL
 end
