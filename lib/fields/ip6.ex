@@ -1,4 +1,4 @@
-defmodule EctoFields.IPV6 do
+defmodule EctoFields.IPv6 do
   @behaviour Ecto.Type
   def type, do: :string
 
@@ -7,13 +7,13 @@ defmodule EctoFields.IPV6 do
 
   ## Examples
 
-      iex> EctoFields.IPV6.cast("2001:1620:28:1:b6f:8bca:93:a116")
+      iex> EctoFields.IPv6.cast("2001:1620:28:1:b6f:8bca:93:a116")
       {:ok, "2001:1620:28:1:b6f:8bca:93:a116"}
 
-      iex> EctoFields.IPV6.cast("192.168.10.1")
+      iex> EctoFields.IPv6.cast("192.168.10.1")
       :error
 
-      iex> EctoFields.IPV6.cast("http://example.com")
+      iex> EctoFields.IPv6.cast("http://example.com")
       :error
   """
   def cast(ip) when is_binary(ip) and byte_size(ip) > 0 do
