@@ -8,13 +8,13 @@ defmodule EctoFields.URL do
     ## Examples
 
     iex> EctoFields.URL.cast("http://example.com")
-    "http://example.com"
+    {:ok, "http://example.com"}
 
     iex> EctoFields.URL.cast("https://example.com")
-    "https://example.com"
+    {:ok, "https://example.com"}
 
     iex> EctoFields.URL.cast("http://example.com/test/foo.html?search=1&page=two#header")
-    "http://example.com/test/foo.html?search=1&page=two#header"
+    {:ok, "http://example.com/test/foo.html?search=1&page=two#header"}
 
     iex> EctoFields.URL.cast("myblog.html")
     :error
@@ -28,6 +28,8 @@ defmodule EctoFields.URL do
     |> validate_host
     |> validate_uri
   end
+
+  def cast(nil), do: {:ok, nil}
 
   def cast(_), do: :error
 
@@ -57,7 +59,7 @@ defmodule EctoFields.URL do
   defp validate_uri(:error), do: :error
   defp validate_uri({url, uri}) do
     if uri == URI.encode(uri) |> URI.decode do
-      url
+      {:ok, url}
     else
       :error
     end

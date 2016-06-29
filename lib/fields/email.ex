@@ -17,19 +17,19 @@ defmodule EctoFields.Email do
     :error
 
     iex> EctoFields.Email.cast("foo.bar@example.com")
-    "foo.bar@example.com"
+    {:ok, "foo.bar@example.com"}
 
     iex> EctoFields.Email.cast("foo.bar+baz/@long.example.photography.uk")
-    "foo.bar+baz/@long.example.photography.uk"
+    {:ok, "foo.bar+baz/@long.example.photography.uk"}
 
     iex> EctoFields.Email.cast("test@localhost")
-    "test@localhost"
+    {:ok, "test@localhost"}
 
     iex> EctoFields.Email.cast("test@192.168.10.1")
-    "test@192.168.10.1"
+    {:ok, "test@192.168.10.1"}
 
     iex> EctoFields.Email.cast("test@2001:1620:28:1:b6f:8bca:93:a116")
-    "test@2001:1620:28:1:b6f:8bca:93:a116"
+    {:ok, "test@2001:1620:28:1:b6f:8bca:93:a116"}
 
   """
   # max_length=254 to be compliant with RFCs 3696 and 5321
@@ -49,10 +49,12 @@ defmodule EctoFields.Email do
 
     # workaround missing with/else for Elixir 1.2
     case result do
-      true -> email
+      true -> {:ok, email}
       false -> :error
     end
   end
+
+  def cast(nil), do: {:ok, nil}
 
   def cast(_) do
     :error

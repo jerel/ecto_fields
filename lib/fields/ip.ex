@@ -8,20 +8,22 @@ defmodule EctoFields.IP do
     ## Examples
 
     iex> EctoFields.IP.cast("192.168.10.1")
-    "192.168.10.1"
+    {:ok, "192.168.10.1"}
 
     iex> EctoFields.IP.cast("http://example.com")
     :error
 
     iex> EctoFields.IP.cast("2001:1620:28:1:b6f:8bca:93:a116")
-    "2001:1620:28:1:b6f:8bca:93:a116"
+    {:ok, "2001:1620:28:1:b6f:8bca:93:a116"}
   """
   def cast(ip) when is_binary(ip) and byte_size(ip) > 0 do
     case ip |> String.to_char_list |> :inet_parse.address do
-      {:ok, _} -> ip
+      {:ok, _} -> {:ok, ip}
       {:error, _} -> :error
     end
   end
+
+  def cast(nil), do: {:ok, nil}
 
   def cast(_), do: :error
 

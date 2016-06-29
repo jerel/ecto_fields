@@ -8,7 +8,7 @@ defmodule EctoFields.PositiveInteger do
     ## Examples
 
     iex> EctoFields.PositiveInteger.cast(1)
-    1
+    {:ok, 1}
 
     iex> EctoFields.PositiveInteger.cast(0)
     :error
@@ -17,8 +17,10 @@ defmodule EctoFields.PositiveInteger do
     :error
   """
   def cast(int) when is_integer(int) and int > 0 do
-    int
+    {:ok, int}
   end
+
+  def cast(nil), do: {:ok, nil}
 
   def cast(_), do: :error
 

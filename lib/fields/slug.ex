@@ -8,19 +8,23 @@ defmodule EctoFields.Slug do
     ## Examples
 
     iex> EctoFields.Slug.cast("   My latest blog post-")
-    "my-latest-blog-post"
+    {:ok, "my-latest-blog-post"}
 
     iex> EctoFields.Slug.cast("From the ЉЊАБЖЗ Naughty ЁЂЃЄ Strings цчшщъыьэюя list")
-    "from-the-naughty-strings-list"
+    {:ok, "from-the-naughty-strings-list"}
   """
   def cast(title) when is_binary(title) and byte_size(title) > 0 do
-    title
+    slug = title
     |> String.normalize(:nfd)
     |> String.downcase
     |> String.replace(~r/[^a-z\s]/u, "")
     |> String.replace(~r/\s+/, "-")
     |> String.replace(~r/^\-*(.*?)\-*$/, "\\1")
+
+    {:ok, slug}
   end
+
+  def cast(nil), do: {:ok, nil}
 
   def cast(_), do: :error
 
