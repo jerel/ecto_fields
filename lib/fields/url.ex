@@ -3,24 +3,24 @@ defmodule EctoFields.URL do
   def type, do: :string
 
   @doc """
-    Validate that the given value is a valid fully qualified url
+  Validate that the given value is a valid fully qualified url
 
-    ## Examples
+  ## Examples
 
-    iex> EctoFields.URL.cast("http://example.com")
-    {:ok, "http://example.com"}
+      iex> EctoFields.URL.cast("http://example.com")
+      {:ok, "http://example.com"}
 
-    iex> EctoFields.URL.cast("https://example.com")
-    {:ok, "https://example.com"}
+      iex> EctoFields.URL.cast("https://example.com")
+      {:ok, "https://example.com"}
 
-    iex> EctoFields.URL.cast("http://example.com/test/foo.html?search=1&page=two#header")
-    {:ok, "http://example.com/test/foo.html?search=1&page=two#header"}
+      iex> EctoFields.URL.cast("http://example.com/test/foo.html?search=1&page=two#header")
+      {:ok, "http://example.com/test/foo.html?search=1&page=two#header"}
 
-    iex> EctoFields.URL.cast("myblog.html")
-    :error
+      iex> EctoFields.URL.cast("myblog.html")
+      :error
 
-    iex> EctoFields.URL.cast("http://example.com\blog\first")
-    :error
+      iex> EctoFields.URL.cast("http://example.com\blog\first")
+      :error
   """
   def cast(url) when is_binary(url) and byte_size(url) > 0 do
     url

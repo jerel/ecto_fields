@@ -3,15 +3,15 @@ defmodule EctoFields.Slug do
   def type, do: :string
 
   @doc """
-    Coerce a regular string into a slug
+  Coerce a regular string into a slug
 
-    ## Examples
+  ## Examples
 
-    iex> EctoFields.Slug.cast("   My latest blog post-")
-    {:ok, "my-latest-blog-post"}
+      iex> EctoFields.Slug.cast("   My latest blog post-")
+      {:ok, "my-latest-blog-post"}
 
-    iex> EctoFields.Slug.cast("From the ЉЊАБЖЗ Naughty ЁЂЃЄ Strings цчшщъыьэюя list")
-    {:ok, "from-the-naughty-strings-list"}
+      iex> EctoFields.Slug.cast("From the ЉЊАБЖЗ Naughty ЁЂЃЄ Strings цчшщъыьэюя list")
+      {:ok, "from-the-naughty-strings-list"}
   """
   def cast(title) when is_binary(title) and byte_size(title) > 0 do
     slug = title

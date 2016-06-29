@@ -9,7 +9,7 @@ To install EctoFields:
   1. Add ecto_fields to your list of dependencies in `mix.exs`:
 
         def deps do
-          [{:ecto_fields, "~> 0.0.3"}]
+          [{:ecto_fields, "~> 0.0.4"}]
         end
 
   2. Use the fields in your Ecto schema:

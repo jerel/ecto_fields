@@ -3,18 +3,18 @@ defmodule EctoFields.PositiveInteger do
   def type, do: :integer
 
   @doc """
-    Validate that the given value is a positive integer.
+  Validate that the given value is a positive integer.
 
-    ## Examples
+  ## Examples
 
-    iex> EctoFields.PositiveInteger.cast(1)
-    {:ok, 1}
+      iex> EctoFields.PositiveInteger.cast(1)
+      {:ok, 1}
 
-    iex> EctoFields.PositiveInteger.cast(0)
-    :error
+      iex> EctoFields.PositiveInteger.cast(0)
+      :error
 
-    iex> EctoFields.PositiveInteger.cast(-10)
-    :error
+      iex> EctoFields.PositiveInteger.cast(-10)
+      :error
   """
   def cast(int) when is_integer(int) and int > 0 do
     {:ok, int}

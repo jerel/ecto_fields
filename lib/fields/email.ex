@@ -3,34 +3,33 @@ defmodule EctoFields.Email do
   def type, do: :string
 
   @doc """
-    Validate that the given value is a valid email
+  Validate that the given value is a valid email
 
-    ## Examples
+  ## Examples
 
-    iex> EctoFields.Email.cast("foo.bar@example.com/")
-    :error
+      iex> EctoFields.Email.cast("foo.bar@example.com")
+      {:ok, "foo.bar@example.com"}
 
-    iex> EctoFields.Email.cast("foo.bar@example.com.")
-    :error
+      iex> EctoFields.Email.cast("foo.bar+baz/@long.example.photography.uk")
+      {:ok, "foo.bar+baz/@long.example.photography.uk"}
 
-    iex> EctoFields.Email.cast("test@example.com<script src='x.js'>")
-    :error
+      iex> EctoFields.Email.cast("test@localhost")
+      {:ok, "test@localhost"}
 
-    iex> EctoFields.Email.cast("foo.bar@example.com")
-    {:ok, "foo.bar@example.com"}
+      iex> EctoFields.Email.cast("test@192.168.10.1")
+      {:ok, "test@192.168.10.1"}
 
-    iex> EctoFields.Email.cast("foo.bar+baz/@long.example.photography.uk")
-    {:ok, "foo.bar+baz/@long.example.photography.uk"}
+      iex> EctoFields.Email.cast("test@2001:1620:28:1:b6f:8bca:93:a116")
+      {:ok, "test@2001:1620:28:1:b6f:8bca:93:a116"}
 
-    iex> EctoFields.Email.cast("test@localhost")
-    {:ok, "test@localhost"}
+      iex> EctoFields.Email.cast("foo.bar@example.com/")
+      :error
 
-    iex> EctoFields.Email.cast("test@192.168.10.1")
-    {:ok, "test@192.168.10.1"}
+      iex> EctoFields.Email.cast("foo.bar@example.com.")
+      :error
 
-    iex> EctoFields.Email.cast("test@2001:1620:28:1:b6f:8bca:93:a116")
-    {:ok, "test@2001:1620:28:1:b6f:8bca:93:a116"}
-
+      iex> EctoFields.Email.cast("test@example.com<script src='x.js'>")
+      :error
   """
   # max_length=254 to be compliant with RFCs 3696 and 5321
   def cast(email) when is_binary(email) and byte_size(email) > 0 and byte_size(email) < 255 do
