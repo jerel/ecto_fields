@@ -25,6 +25,8 @@ To install EctoFields:
 
 * EctoFields.Email
 * EctoFields.IP (accepts both ipv4 and ipv6)
+* EctoFields.IPV4
+* EctoFields.IPV6
 * EctoFields.PositiveInteger
 * EctoFields.Slug
 * EctoFields.URL
