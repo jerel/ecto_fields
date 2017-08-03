@@ -3,7 +3,7 @@ defmodule EctoFields.Mixfile do
 
   def project do
     [app: :ecto_fields,
-     version: "0.0.4",
+     version: "1.0.0",
      elixir: "~> 1.2",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
