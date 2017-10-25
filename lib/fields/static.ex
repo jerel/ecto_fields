@@ -1,6 +1,6 @@
 defmodule EctoFields.Static do
   @moduledoc """
-  Coerce a regular string into an atom
+  Enforce a static value for a database column, useful when multiple schemas store data in one table
 
   ## Examples
 
@@ -22,18 +22,19 @@ defmodule EctoFields.Static do
       ...>   import EctoFields.Static
       ...>
       ...>   static_field(Type, "truck")
-      ...>   static_field(Foo, "bar")
+      ...>   static_field(Second, "anything")
       ...>
       ...>   schema "vehicles" do
       ...>     field :type, Type
+      ...>     field :second, Second
       ...>     field :license_plate, :string
       ...>     field :make, :string
       ...>   end
       ...> end
       ...> Truck.Type.cast(nil)
       {:ok, "truck"}
-      iex> Truck.Foo.cast(nil)
-      {:ok, "bar"}
+      iex> Truck.Second.cast(nil)
+      {:ok, "anything"}
   """
 
   defmacro static_field(module, value) do

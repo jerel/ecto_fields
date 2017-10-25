@@ -1,8 +1,5 @@
 defmodule EctoFields.Atom do
-  @behaviour Ecto.Type
-  def type, do: :string
-
-  @doc """
+  @moduledoc """
   Coerce a regular string into an atom
 
   ## Examples
@@ -16,6 +13,9 @@ defmodule EctoFields.Atom do
       iex> EctoFields.Atom.cast(nil)
       {:ok, nil}
  """
+  @behaviour Ecto.Type
+  def type, do: :string
+
   def cast(nil), do: {:ok, nil}
   def cast(str) when is_binary(str), do: {:ok, String.to_atom(str)}
   def cast(atom) when is_atom(atom), do: {:ok, atom}
