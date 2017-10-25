@@ -9,4 +9,6 @@ defmodule EctoFieldsTest do
   doctest EctoFields.PositiveInteger
   doctest EctoFields.Slug
   doctest EctoFields.URL
+  doctest EctoFields.Atom
+  doctest EctoFields.Static
 end

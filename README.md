@@ -23,12 +23,14 @@ To install EctoFields:
    ```
 ## Current fields
 
+* EctoFields.Atom
 * EctoFields.Email
 * EctoFields.IP (accepts both ipv4 and ipv6)
 * EctoFields.IPv4
 * EctoFields.IPv6
 * EctoFields.PositiveInteger
 * EctoFields.Slug
+* EctoFields.Static
 * EctoFields.URL
 
 ## Roadmap
