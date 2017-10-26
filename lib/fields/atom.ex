@@ -4,6 +4,8 @@ defmodule EctoFields.Atom do
 
   ## Examples
 
+  Note: only use this field when you have a fixed number of possible values (atoms are not garbage collected)
+
       iex> EctoFields.Atom.cast("started")
       {:ok, :started}
 
@@ -25,6 +27,7 @@ defmodule EctoFields.Atom do
   def load(nil), do: {:ok, nil}
   def load(str), do: {:ok, String.to_atom(str)}
 
-  # when dumping to the database it will automatically be converted to a string
-  def dump(atom), do: {:ok, atom}
+  # save to the database
+  def dump(nil), do: {:ok, nil}
+  def dump(atom), do: {:ok, to_string(atom)}
 end
