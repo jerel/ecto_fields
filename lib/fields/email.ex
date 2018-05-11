@@ -7,7 +7,7 @@ defmodule EctoFields.Email do
 
   ## Examples
 
-      iex> EctoFields.Email.cast("foo.bar@example.com")
+      iex> EctoFields.Email.cast("foo.bar@example.com     ")
       {:ok, "foo.bar@example.com"}
 
       iex> EctoFields.Email.cast("foo.bar+baz/@long.example.photography.uk")
@@ -43,16 +43,16 @@ defmodule EctoFields.Email do
     # limited to label length of 63 per RFC 1034
     domain_regex = Regex.compile!("((?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+)(?:[A-Z0-9-]{2,63}(?<!-))\\z", [:caseless, :multiline])
 
-    result = with [user, domain] <- String.split(email, "@"),
+    result = with [user, domain] <- String.trim(email) |> String.split("@"),
          true <- Regex.match?(user_regex, user),
          true <- Regex.match?(domain_regex, domain) || domain == "localhost" || is_valid_ip?(domain) do
-      true
+      {:ok, Enum.join([user, domain], "@")}
     end
 
     # workaround missing with/else for Elixir 1.2
     case result do
-      true -> {:ok, email}
-      _    -> :error
+      {:ok, _} -> result
+      _        -> :error
     end
   end
 
