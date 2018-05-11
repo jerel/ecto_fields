@@ -28,6 +28,9 @@ defmodule EctoFields.Email do
       iex> EctoFields.Email.cast("foo.bar@example.com.")
       :error
 
+      iex> EctoFields.Email.cast("bad email")
+      :error
+
       iex> EctoFields.Email.cast("test@example.com<script src='x.js'>")
       :error
   """
@@ -49,7 +52,7 @@ defmodule EctoFields.Email do
     # workaround missing with/else for Elixir 1.2
     case result do
       true -> {:ok, email}
-      false -> :error
+      _    -> :error
     end
   end
 
