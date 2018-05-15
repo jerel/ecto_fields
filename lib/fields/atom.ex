@@ -14,20 +14,28 @@ defmodule EctoFields.Atom do
 
       iex> EctoFields.Atom.cast(nil)
       {:ok, nil}
- """
+  """
   @behaviour Ecto.Type
-  def type, do: :string
 
+  @max_atom_length 0xFF
+
+  @impl Ecto.Type
+  def type(), do: :string
+
+  @impl Ecto.Type
   def cast(nil), do: {:ok, nil}
-  def cast(str) when is_binary(str), do: {:ok, String.to_atom(str)}
   def cast(atom) when is_atom(atom), do: {:ok, atom}
+  def cast(binary) when is_binary(binary) and byte_size(binary) <= @max_atom_length, do: {:ok, String.to_atom(binary)}
   def cast(_), do: :error
 
   # when loading from the database convert to an atom
-  def load(nil), do: {:ok, nil}
-  def load(str), do: {:ok, String.to_atom(str)}
+  @impl Ecto.Type
+  def load(term), do: cast(term)
 
   # save to the database
+  @impl Ecto.Type
   def dump(nil), do: {:ok, nil}
-  def dump(atom), do: {:ok, to_string(atom)}
+  def dump(atom) when is_atom(atom), do: {:ok, Atom.to_string(atom)}
+  def dump(binary) when is_binary(binary) and byte_size(binary) <= @max_atom_length, do: {:ok, binary}
+  def dump(_), do: :error
 end

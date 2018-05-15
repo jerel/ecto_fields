@@ -2,27 +2,24 @@ defmodule EctoFields.Mixfile do
   use Mix.Project
 
   def project() do
-    [app: :ecto_fields,
-     version: "1.1.4",
-     elixir: "~> 1.2",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     deps: deps(),
-     package: package(),
-     description: description()]
-  end
-
-  # Configuration for the OTP application
-  #
-  # Type "mix help compile.app" for more information
-  def application() do
-    [applications: [:logger]]
+    [
+      app: :ecto_fields,
+      version: "1.1.4",
+      elixir: "~> 1.2",
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
+      deps: deps(),
+      package: package(),
+      description: description()
+    ]
   end
 
   def package() do
-    [licenses: ["MIT"],
-     maintainers: ["jerel"],
-     links: %{"GitHub" => "https://github.com/jerel/ecto_fields"}]
+    [
+      licenses: ["MIT"],
+      maintainers: ["jerel"],
+      links: %{"GitHub" => "https://github.com/jerel/ecto_fields"}
+    ]
   end
 
   def description() do
@@ -41,8 +38,11 @@ defmodule EctoFields.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps() do
-    [{:ecto, "~> 2.0"},
-     {:ex_doc, ">= 0.0.0", only: :dev},
-     {:mix_test_watch, "~> 0.2", only: :dev}]
+    [
+      {:ecto, "~> 2.0"},
+      {:ex_doc, ">= 0.0.0", only: :dev},
+      {:mix_test_watch, "~> 0.2", only: :dev},
+      {:propcheck, "~> 1.0.5", only: :test}
+    ]
   end
 end
