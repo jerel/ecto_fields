@@ -9,7 +9,7 @@ To install EctoFields:
   1. Add ecto_fields to your list of dependencies in `mix.exs` :
   ```elixir
     def deps do
-      [{:ecto_fields, "~> 1.1.4"}]
+      [{:ecto_fields, "~> 1.1.5"}]
     end
   ```
   2. Use the fields in your Ecto schema:
