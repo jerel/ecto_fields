@@ -38,21 +38,31 @@ defmodule EctoFields.Email do
   def cast(email) when is_binary(email) and byte_size(email) > 0 and byte_size(email) < 255 do
     # Thanks to the Django Project for the regex inspiration.
     # https://tools.ietf.org/html/rfc2822#section-3.2.4
-    user_regex = Regex.compile!("(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*\\z)", [:caseless, :multiline])
+    user_regex =
+      Regex.compile!("(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*\\z)", [
+        :caseless,
+        :multiline
+      ])
 
     # limited to label length of 63 per RFC 1034
-    domain_regex = Regex.compile!("((?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+)(?:[A-Z0-9-]{2,63}(?<!-))\\z", [:caseless, :multiline])
+    domain_regex =
+      Regex.compile!(
+        "((?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+)(?:[A-Z0-9-]{2,63}(?<!-))\\z",
+        [:caseless, :multiline]
+      )
 
-    result = with [user, domain] <- String.trim(email) |> String.split("@"),
-         true <- Regex.match?(user_regex, user),
-         true <- Regex.match?(domain_regex, domain) || domain == "localhost" || is_valid_ip?(domain) do
-      {:ok, Enum.join([user, domain], "@")}
-    end
+    result =
+      with [user, domain] <- String.trim(email) |> String.split("@"),
+           true <- Regex.match?(user_regex, user),
+           true <-
+             Regex.match?(domain_regex, domain) || domain == "localhost" || is_valid_ip?(domain) do
+        {:ok, Enum.join([user, domain], "@")}
+      end
 
     # workaround missing with/else for Elixir 1.2
     case result do
       {:ok, _} -> result
-      _        -> :error
+      _ -> :error
     end
   end
 
@@ -68,12 +78,10 @@ defmodule EctoFields.Email do
   # converts our ecto type to a string
   def dump(email), do: {:ok, email}
 
-
   defp is_valid_ip?(domain) do
-    case domain |> String.to_char_list |> :inet_parse.address do
+    case domain |> String.to_charlist() |> :inet_parse.address() do
       {:ok, _} -> true
       {:error, _} -> false
     end
   end
-
 end
