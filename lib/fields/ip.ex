@@ -17,7 +17,7 @@ defmodule EctoFields.IP do
       :error
   """
   def cast(ip) when is_binary(ip) and byte_size(ip) > 0 do
-    case ip |> String.to_char_list |> :inet_parse.address do
+    case ip |> String.to_charlist() |> :inet_parse.address() do
       {:ok, _} -> {:ok, ip}
       {:error, _} -> :error
     end

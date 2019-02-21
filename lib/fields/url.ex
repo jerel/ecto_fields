@@ -42,27 +42,31 @@ defmodule EctoFields.URL do
   defp validate_protocol("http://" <> rest = url) do
     {url, rest}
   end
+
   defp validate_protocol("https://" <> rest = url) do
     {url, rest}
   end
+
   defp validate_protocol(_), do: :error
 
   defp validate_host(:error), do: :error
+
   defp validate_host({url, rest}) do
     [domain | uri] = String.split(rest, "/")
-    case String.to_char_list(domain) |> :inet_parse.domain do
+
+    case String.to_charlist(domain) |> :inet_parse.domain() do
       true -> {url, Enum.join(uri, "/")}
       _ -> :error
     end
   end
 
   defp validate_uri(:error), do: :error
+
   defp validate_uri({url, uri}) do
-    if uri == URI.encode(uri) |> URI.decode do
+    if uri == URI.encode(uri) |> URI.decode() do
       {:ok, url}
     else
       :error
     end
   end
-
 end
