@@ -1,5 +1,6 @@
 defmodule EctoFields.PositiveInteger do
   @behaviour Ecto.Type
+
   def type, do: :integer
 
   @doc """
@@ -29,4 +30,8 @@ defmodule EctoFields.PositiveInteger do
 
   # converts our ecto type to a value
   def dump(int), do: {:ok, int}
+
+  def embed_as(_), do: :self
+
+  def equal?(a, b), do: a == b
 end

@@ -1,5 +1,6 @@
 defmodule EctoFields.Slug do
   @behaviour Ecto.Type
+
   def type, do: :string
 
   @doc """
@@ -33,4 +34,8 @@ defmodule EctoFields.Slug do
 
   # converts our ecto type to a string
   def dump(slug), do: {:ok, slug}
+
+  def embed_as(_), do: :self
+
+  def equal?(a, b), do: a == b
 end

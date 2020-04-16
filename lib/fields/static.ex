@@ -57,6 +57,10 @@ defmodule EctoFields.Static do
 
         # write to the database
         def dump(_), do: {:ok, unquote(value)}
+
+        def embed_as(_), do: :self
+
+        def equal?(a, b), do: a == b
       end
     end
   end

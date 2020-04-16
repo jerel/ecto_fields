@@ -1,5 +1,6 @@
 defmodule EctoFields.IPv6 do
   @behaviour Ecto.Type
+
   def type, do: :string
 
   @doc """
@@ -32,4 +33,8 @@ defmodule EctoFields.IPv6 do
 
   # converts our ecto type to a string
   def dump(ip), do: {:ok, ip}
+
+  def embed_as(_), do: :self
+
+  def equal?(a, b), do: a == b
 end

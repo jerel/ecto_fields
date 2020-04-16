@@ -1,5 +1,6 @@
 defmodule EctoFields.URL do
   @behaviour Ecto.Type
+
   def type, do: :string
 
   @doc """
@@ -38,6 +39,10 @@ defmodule EctoFields.URL do
 
   # converts our ecto type to a string
   def dump(url), do: {:ok, url}
+
+  def embed_as(_), do: :self
+
+  def equal?(a, b), do: a == b
 
   defp validate_protocol("http://" <> rest = url) do
     {url, rest}

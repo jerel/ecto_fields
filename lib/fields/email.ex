@@ -1,5 +1,6 @@
 defmodule EctoFields.Email do
   @behaviour Ecto.Type
+
   def type, do: :string
 
   @doc """
@@ -77,6 +78,10 @@ defmodule EctoFields.Email do
 
   # converts our ecto type to a string
   def dump(email), do: {:ok, email}
+
+  def embed_as(_), do: :self
+
+  def equal?(a, b), do: a == b
 
   defp is_valid_ip?(domain) do
     case domain |> String.to_charlist() |> :inet_parse.address() do
