@@ -8,6 +8,9 @@ defmodule EctoFields.URL do
 
   ## Examples
 
+      iex> EctoFields.URL.cast("http://1.1.1.1")
+      {:ok, "http://1.1.1.1"}
+
       iex> EctoFields.URL.cast("http://example.com")
       {:ok, "http://example.com"}
 
@@ -59,9 +62,14 @@ defmodule EctoFields.URL do
   defp validate_host({url, rest}) do
     [domain | uri] = String.split(rest, "/")
 
-    case String.to_charlist(domain) |> :inet_parse.domain() do
-      true -> {url, Enum.join(uri, "/")}
-      _ -> :error
+    erl_host = String.to_charlist(domain)
+
+    if :inet_parse.domain(erl_host) or
+         match?({:ok, _}, :inet_parse.ipv4strict_address(erl_host)) or
+         match?({:ok, _}, :inet_parse.ipv6strict_address(erl_host)) do
+      {url, Enum.join(uri, "/")}
+    else
+      :error
     end
   end
 
