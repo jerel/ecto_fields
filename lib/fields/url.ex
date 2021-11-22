@@ -20,6 +20,9 @@ defmodule EctoFields.URL do
       iex> EctoFields.URL.cast("http://example.com/test/foo.html?search=1&page=two#header")
       {:ok, "http://example.com/test/foo.html?search=1&page=two#header"}
 
+      iex> EctoFields.URL.cast("http://example.com:8080/")
+      {:ok, "http://example.com:8080/"}
+
       iex> EctoFields.URL.cast("myblog.html")
       :error
 
@@ -61,6 +64,14 @@ defmodule EctoFields.URL do
 
   defp validate_host({url, rest}) do
     [domain | uri] = String.split(rest, "/")
+
+    domain =
+      case String.split(domain, ":") do
+        # ipv6
+        [_, _, _, _, _, _, _, _] -> domain
+        [domain, _port] -> domain
+        _ -> domain
+      end
 
     erl_host = String.to_charlist(domain)
 
